@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan base-package="com.subtitle" />
+	<context:annotation-config />
+
+        <bean id="userDao" class="com.subtitle.dao.UserDaoImpl" />
+        <bean id="kelimeDao" class="com.subtitle.dao.KelimeDaoImpl" />
+        
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="datasource" />
+	</bean><!--
+        <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="datasource">
+        
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+
+            <property name="url" value="jdbc:mysql://localhost/subtitle"/>
+
+            <property name="username" value="root"/>
+
+            <property name="password" value=""/>
+
+        </bean>
+
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://eu-cdbr-azure-west-b.cloudapp.net:3306/subtitle" />
+		<property name="username" value="b063ea9e0ac301" />
+		<property name="password" value="fa56bb7d" />
+	</bean>-->
+         <bean id="datasource" class="com.zaxxer.hikari.HikariDataSource"  destroy-method="close">
+                <property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"/>
+                <property name="maximumPoolSize" value="4" />
+                <property name="maxLifetime" value="30000" />
+                <property name="idleTimeout" value="30000" />
+                <property name="dataSourceProperties">
+                          <props>
+                              <prop key="url">jdbc:mysql://eu-cdbr-azure-west-b.cloudapp.net:3306/subtitle</prop>
+                              <prop key="user">b063ea9e0ac301</prop>
+                              <prop key="password">fa56bb7d</prop>
+                               <prop key="prepStmtCacheSize">250</prop>
+                               <prop key="prepStmtCacheSqlLimit">2048</prop>
+                               <prop key="cachePrepStmts">true</prop>
+                               <prop key="useServerPrepStmts">true</prop>
+                          </props>
+                </property>
+</bean>
+
+</beans>
